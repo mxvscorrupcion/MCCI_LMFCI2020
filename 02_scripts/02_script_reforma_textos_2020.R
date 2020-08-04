@@ -1462,30 +1462,39 @@ fiuf <- unique(a$título)
 fiuff <- unique(a$subtítulo)
 fiuffi <- unique(a$fuente)
 
-ggplot(a, 
-       aes(x = as.factor(año), 
-           fill = props, 
-           label = paste0(props, "%"),
-           y = str_wrap(variables,25))) + 
-  geom_tile() +
-  geom_text(size = 10,
-            col = "#ffffff") + 
-  scale_fill_gradient(high = '#000c2d', low = '#b2b6c0') +
-  labs(title= str_wrap(fiuf, width = 67),
-       subtitle = fiuff,
+ggplot(a, aes(x = reorder(str_wrap(variables, 25), as.numeric(orden)),
+              y = props,
+              label = paste0(props, "%"),
+              fill = reorder(str_wrap(variables, 25), as.numeric(orden)))) +
+  geom_col(width = 0.5) + geom_text(vjust = -0.5, size = 12) +
+  facet_wrap(~str_wrap(v_id, 35)) +
+  scale_y_continuous(
+    limits = c(0,100),
+    breaks = seq(0,100,25),
+    labels = paste0(
+      as.character(seq(0,100,25)), "%"
+    )
+  ) + 
+  scale_fill_manual("", values = c(mcci_discrete[1], 
+                                   mcci_discrete[2], 
+                                   mcci_discrete[5],
+                                   mcci_discrete[3])) +
+  labs(title= str_wrap(fiuf, width = 75),
        caption = fiuffi) +
   theme_minimal() +
-  theme(plot.title = element_text(size = 30, face = "bold",hjust = 0.5),
-        plot.subtitle = element_text(size = 25, hjust = 0.5),
+  theme(plot.title = element_text(size = 35, face = "bold" , hjust = 0.5),
         plot.caption = element_text(size = 20),
-        plot.background = element_rect(fill = "transparent",colour = NA),
+        strip.text.x = element_text(size = 30),
+        panel.background = element_rect(fill = "transparent",colour = NA),
         text = element_text(family = "Arial Narrow"),
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
-        axis.text.x = element_text(size = 25),
-        axis.text.y = element_text(size = 25),
-        legend.position = "none") +
-  coord_fixed()
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 18),
+        legend.title = element_blank(),
+        legend.text = element_text(size = 25),
+        legend.spacing.x = unit(1.0, 'cm'),
+        legend.position = "bottom")
 
 ggsave(filename = paste0(
   out, unique(a$id), ".png"
