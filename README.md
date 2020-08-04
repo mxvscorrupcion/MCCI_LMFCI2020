@@ -805,3 +805,157 @@ a
 [katia.guzman@contralacorrupcion.mx](katia.guzman@contralacorrupcion.mx).
 
 Happy coding\!
+
+## Nota Metodológica
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:center;">
+
+</th>
+
+<th style="text-align:center;">
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:center;">
+
+Levantamiento
+
+</td>
+
+<td style="text-align:center;">
+
+Encuesta nacional en vivienda
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Población objetivo
+
+</td>
+
+<td style="text-align:center;">
+
+Personas de 18 años cumplidos en adelante
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Marco muestral
+
+</td>
+
+<td style="text-align:center;">
+
+Catálogo de secciones electorales del INE
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Tamaño de la muestra
+
+</td>
+
+<td style="text-align:center;">
+
+1,500 entrevistas efectivas
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Fecha de levantamiento
+
+</td>
+
+<td style="text-align:center;">
+
+19 de febrero a 6 de marzo de 2020
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Diseño muestral
+
+</td>
+
+<td style="text-align:center;">
+
+Bietápico, estratificado y por conglomerados.
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Error asociado a la muestra
+
+</td>
+
+<td style="text-align:center;">
+
+±3.9% con un intervalo de confianza al 95%
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Tasa de rechazo
+
+</td>
+
+<td style="text-align:center;">
+
+43%
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>

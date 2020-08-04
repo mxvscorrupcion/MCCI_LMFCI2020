@@ -39,7 +39,7 @@ require(tidyverse)
 
 La programación con base en funciones es útil para sistematizar procesos. Otra ventaja es que permite identificar los errores cometidos de forma sencilla. Previo a la recodificación y a la estimación de resultados, se programaron dos funciones muy sencillas cuyo objetivo es generar un identificador sistematizado de, por un lado, aquellas variables que son "factores de expansión" `rename_fac()` y, por otro lado, las variables cuyos resultados se desean estimar `rename_names()`.
 
-```{r 02_rename_funcs, echo = T, results = 'hide', warning=FALSE, tidy=TRUE}
+```{r 02_rename_funcs, echo = T, results = 'hide', warning=FALSE, class.output="scroll-100", tidy=TRUE}
 # Funciones para renombrar ----
 rename_fac <- function(x){
   paste0("fac_", x)
@@ -194,7 +194,7 @@ knitr::kable(
 
 
 Finalmente, se realizó una recodificación y se crearon vectores de tipo carácter para facilitar la automatización del análisis. El objetivo principal es crear un código eficiente con los menores cambios manuales posibles.
-```{r 06_recode, echo = T, warning=FALSE, tidy=TRUE}
+```{r 06_recode, echo = T, warning=FALSE, class.output="scroll-100", tidy=TRUE}
 # Recodificación ----
 v_names <- codebook_2020$pregunta[c(16:113,139,140)]
 v_names <- tolower(v_names)
@@ -255,7 +255,7 @@ data_2020[data_2020 == "Ns/Nc"] <- NA
 ## El análisis
 
 El análisis se compone de dos facetas. Primero, se utilizó el paquete `srvyr{}` para calcular todas las proporciones ponderadas de la encuesta. En esta etapa, además de las proporciones simples, se realizaron cruces por sexo, edad y circunscripción electoral. En el archivo [02_script_reforma_2020](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_2020.R) se encuentra todo el código utilizado para replicar los resultados. A continuación, se muestra el ejemplo de código para calcular cruces por sexo de todas las variables.
-```{r 07_props_sexo, echo = T, results = 'hide', warning=FALSE, tidy=TRUE}
+```{r 07_props_sexo, echo = T, results = 'hide', class.output="scroll-100", warning=FALSE, tidy=TRUE}
 # Proporciones por sexo ----
 # * Tabla de frecuencias ----
 test <- data.frame()
@@ -305,7 +305,7 @@ knitr::kable(
 
 
 Segundo, al ser muy fácil filtrar este formato de base de datos, programar un loop para gráficas también es sencillo.
-```{r 09_props_sexo_gráfica, echo = T, results = 'hide', warning=FALSE, tidy=TRUE}
+```{r 09_props_sexo_gráfica, echo = T, results = 'hide', class.output="scroll-100", warning=FALSE, tidy=TRUE}
 # * Gráficas ----
 v_names_loop <- str_replace_all(v_names, "v_", "")
 v_num <- sub("\\_.*", "", v_names_loop)
@@ -434,3 +434,24 @@ Si bien para el producto final se realizaron [modificaciones estéticas](https:/
 Si tienes cualquier duda, comentario o sugerencia, no dudes en contactar a [katia.guzman@contralacorrupcion.mx](katia.guzman@contralacorrupcion.mx).
 
 Happy coding!
+
+
+## Nota Metodológica
+
+```{r 13_nota_metod_tabla, echo=FALSE, warning=FALSE, message=FALSE, tidy=TRUE}
+knitr::kable(
+  tribble(
+    ~` `,  ~`  `,
+    
+    "Levantamiento", "Encuesta nacional en vivienda",
+    "Población objetivo", "Personas de 18 años cumplidos en adelante",
+    "Marco muestral", "Catálogo de secciones electorales del INE",
+    "Tamaño de la muestra", "1,500 entrevistas efectivas",
+    "Fecha de levantamiento", "19 de febrero a 6 de marzo de 2020",
+    "Diseño muestral", "Bietápico, estratificado y por conglomerados. ",
+    "Error asociado a la muestra", "±3.9% con un intervalo de confianza al 95%",
+    "Tasa de rechazo", "43%"
+), align = "c"
+) %>%
+  kableExtra::kable_styling(bootstrap_options = "striped", full_width = F)
+```
