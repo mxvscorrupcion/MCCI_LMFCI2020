@@ -1,6 +1,6 @@
 ---
 title: "Los Mexicanos Frente a la Corrupción y la Impunidad"
-author: "UIA-MCCI"
+author: "MCCI-UIA"
 output: 
   html_document:
   code_folding: hide
@@ -166,8 +166,8 @@ mcci_discrete <- c(
 ...se trabajó con directorios, cuya lógica es crear dos objetos de tipo caracter con la ruta de la carpeta en donde se guardaron los datos a analizar (`input`), y la carpeta en la que se guardarán los resultados deseados (`output`).
 ```{r 04_directorios, echo = T, results = 'hide', warning=FALSE, class.output="scroll-100"}
 # Directorios ----
-inp <- "~/MCCI/encuesta_2020/01_datos/"
-out <- "~/MCCI/encuesta_2020/03_gráficas/"
+inp <- "~/Github/MCCI_LMFCI2020/01_datos/"
+out <- "~/Github/MCCI_LMFCI2020/03_gráficas/"
 ```
 
 
@@ -250,7 +250,7 @@ data_2020[data_2020 == "Ns/Nc"] <- NA
 
 ## El análisis
 
-El análisis se compone de dos facetas. Primero, se utilizó el paquete `srvyr{}` para calcular todas las proporciones ponderadas de la encuesta. En esta etapa, además de las proporciones simples, se realizaron cruces por sexo, edad y circunscripción electoral. En el archivo [02_script_reforma_2020](liga_al_script) se encuentra todo el código utilizado para replicar los resultados. A continuación, se muestra el ejemplo de código para calcular cruces por sexo de todas las variables.
+El análisis se compone de dos facetas. Primero, se utilizó el paquete `srvyr{}` para calcular todas las proporciones ponderadas de la encuesta. En esta etapa, además de las proporciones simples, se realizaron cruces por sexo, edad y circunscripción electoral. En el archivo [02_script_reforma_2020](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_2020.R) se encuentra todo el código utilizado para replicar los resultados. A continuación, se muestra el ejemplo de código para calcular cruces por sexo de todas las variables.
 ```{r 07_props_sexo, echo = T, results = 'hide', warning=FALSE, tidy=TRUE}
 # Proporciones por sexo ----
 # * Tabla de frecuencias ----
@@ -425,7 +425,7 @@ ggplot(
 ```
 
 
-Si bien para el producto final se realizaron modificaciones estéticas a partir de una base de datos que sólo contenía los datos usados en cada texto, la automatización del proceso de análisis le permitió a MCCI-UIA echar un vistazo inmediato a los principales resultados de la encuesta MCCI-Reforma 2020.
+Si bien para el producto final se realizaron (modificaciones estéticas)[https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_textos_2020.R] a partir de una base de datos que sólo contenía los datos usados en cada texto, la automatización del proceso de análisis le permitió a MCCI-UIA echar un vistazo inmediato a los principales resultados de la encuesta MCCI-Reforma 2020.
 
 Si tienes cualquier duda, comentario o sugerencia, no dudes en contactar a [katia.guzman@contralacorrupcion.mx](katia.guzman@contralacorrupcion.mx).
 
