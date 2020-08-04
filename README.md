@@ -793,8 +793,8 @@ rápidamente
 
 <img src="README_figs/README-10_gráfica_apr_pres-1.png" width="1440" style="display: block; margin: auto;" />
 
-Si bien para el producto final se realizaron (modificaciones
-estéticas)\[<https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_textos_2020.R>\]
+Si bien para el producto final se realizaron [modificaciones
+estéticas](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_textos_2020.R)
 a partir de una base de datos que sólo contenía los datos usados en cada
 texto, la automatización del proceso de análisis le permitió a MCCI-UIA
 echar un vistazo inmediato a los principales resultados de la encuesta

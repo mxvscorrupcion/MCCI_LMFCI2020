@@ -10,7 +10,7 @@ knitr::opts_chunk$set(collapse=TRUE, comment="##", fig.retina=2, fig.path = "REA
 ```
 
 
-```{css, echo=FALSE}
+```{css, echo=FALSE, results = 'hide', warning=FALSE, message=FALSE}
 pre {
   max-height: 500px;
   overflow-y: auto;
@@ -429,7 +429,7 @@ ggplot(
 ```
 
 
-Si bien para el producto final se realizaron (modificaciones estéticas)[https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_textos_2020.R] a partir de una base de datos que sólo contenía los datos usados en cada texto, la automatización del proceso de análisis le permitió a MCCI-UIA echar un vistazo inmediato a los principales resultados de la encuesta MCCI-Reforma 2020.
+Si bien para el producto final se realizaron [modificaciones estéticas](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_textos_2020.R) a partir de una base de datos que sólo contenía los datos usados en cada texto, la automatización del proceso de análisis le permitió a MCCI-UIA echar un vistazo inmediato a los principales resultados de la encuesta MCCI-Reforma 2020.
 
 Si tienes cualquier duda, comentario o sugerencia, no dudes en contactar a [katia.guzman@contralacorrupcion.mx](katia.guzman@contralacorrupcion.mx).
 
