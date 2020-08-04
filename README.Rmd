@@ -1,11 +1,13 @@
 ---
 title: "Los Mexicanos Frente a la Corrupción y la Impunidad"
 author: "MCCI-UIA"
-output: rmarkdown::github_document
+output: 
+  rmarkdown::github_document:
+  code_folding: hide
 always_allow_html: true
 ---
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, results = 'hide', warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(collapse=TRUE, comment="##", fig.retina=2, fig.path = "README_figs/README-")
 ```
 
