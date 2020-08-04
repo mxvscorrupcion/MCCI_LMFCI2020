@@ -1,11 +1,23 @@
-# MCCI_LMFCI2020
-Repositorio que contiene el análisis generado a partir de la encuesta MCCI-Reforma, Los Mexicanos Frente a la Corrupción y la Impunidad
+Los Mexicanos Frente a la Corrupción y la Impunidad
+================
+MCCI-UIA
 
+<style type="text/css">
+pre {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 250px;
+}
+</style>
 
 ## Introducción
 
 Los paquetes que se utilizaron para este análisis son:
-```{r 01_paquetes, echo = T, results = 'hide', warning=FALSE, message=FALSE, tidy=TRUE}
+
+``` r
 require(foreign)
 require(mxmaps)
 require(haven)
@@ -18,9 +30,15 @@ require(gridExtra)
 require(tidyverse)
 ```
 
-La programación con base en funciones es útil para sistematizar procesos. Otra ventaja es que permite identificar los errores cometidos de forma sencilla. Previo a la recodificación y a la estimación de resultados, se programaron dos funciones muy sencillas cuyo objetivo es generar un identificador sistematizado de, por un lado, aquellas variables que son "factores de expansión" `rename_fac()` y, por otro lado, las variables cuyos resultados se desean estimar `rename_names()`.
+La programación con base en funciones es útil para sistematizar
+procesos. Otra ventaja es que permite identificar los errores cometidos
+de forma sencilla. Previo a la recodificación y a la estimación de
+resultados, se programaron dos funciones muy sencillas cuyo objetivo es
+generar un identificador sistematizado de, por un lado, aquellas
+variables que son “factores de expansión” `rename_fac()` y, por otro
+lado, las variables cuyos resultados se desean estimar `rename_names()`.
 
-```{r 02_rename_funcs, echo = T, results = 'hide', warning=FALSE, tidy=TRUE}
+``` r
 # Funciones para renombrar ----
 rename_fac <- function(x){
   paste0("fac_", x)
@@ -131,12 +149,12 @@ recode_names <- function(x){
       x == "p3r" ~ v_names[100]
     )
 }
-
 ```
 
+Con el objetivo de facilitar y automatizar lo más posible el proceso de
+análisis, se estableció una paleta de colores institucionales…
 
-Con el objetivo de facilitar y automatizar lo más posible el proceso de análisis, se estableció una paleta de colores institucionales...
-```{r 03_paleta, echo = T, results = 'hide', warning=FALSE , tidy=TRUE}
+``` r
 # Paletas de colores ----
 mcci_discrete <- c(
   '000c2d', # (azul oscuro)
@@ -147,17 +165,22 @@ mcci_discrete <- c(
 )
 ```
 
+…se trabajó con directorios, cuya lógica es crear dos objetos de tipo
+caracter con la ruta de la carpeta en donde se guardaron los datos a
+analizar (`input`), y la carpeta en la que se guardarán los resultados
+deseados (`output`).
 
-...se trabajó con directorios, cuya lógica es crear dos objetos de tipo caracter con la ruta de la carpeta en donde se guardaron los datos a analizar (`input`), y la carpeta en la que se guardarán los resultados deseados (`output`).
-```{r 04_directorios, echo = T, results = 'hide', warning=FALSE, class.output="scroll-100"}
+``` r
 # Directorios ----
 inp <- "~/Github/MCCI_LMFCI2020/01_datos/"
 out <- "~/Github/MCCI_LMFCI2020/03_gráficas/"
 ```
 
+Otra ventaja de usar R es que se pueden crear codebooks de forma muy
+rápida y sencilla a partir de los atributos de una base de datos
+`.sav`.
 
-Otra ventaja de usar R es que se pueden crear codebooks de forma muy rápida y sencilla a partir de los atributos de una base de datos `.sav`.
-```{r 05_datos, echo = T, warning=FALSE, class.output="scroll-100"}
+``` r
 # Datos ----
 d <- read.spss(paste0(inp,"N202003_MCCI.sav"),to.data.frame = T) %>% 
   as.tibble()
@@ -173,9 +196,25 @@ knitr::kable(
   kableExtra::kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
+| etiqueta | pregunta                                                                                                                                        |
+| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| p1       | 1\. En su opinión, ¿cuál es el principal problema que hay en el País hoy en día?                                                                |
+| p3       | 3\. En general, ¿usted aprueba o desaprueba la forma como Andrés Manuel López Obrador está haciendo su trabajo como Presidente de la República? |
+| p4       | 4\. Si hoy hubiera elecciones para decidir si Andrés Manuel López Obrador debe permanecer en el cargo o debe renunciar, ¿usted cómo votaría?    |
+| p5       | 5\. ¿Cuál cree usted que es la principal causa de la corrupción en México?                                                                      |
+| p6a      | 6A. ¿Usted diría que se justifica Dar una mordida para evitar una detención injusta o no se justifica?                                          |
+| p6b      | 6B. ¿Usted diría que se justifica Dar una propina para acelerar un trámite o no se justifica?                                                   |
+| p6c      | 6C. ¿Usted diría que se justifica Asistir a un evento político para recibir algún programa social o no se justifica?                            |
+| p6d      | 6D. ¿Usted diría que se justifica Usar un puesto público para beneficiar a un familiar, a un amigo o a un conocido o no se justifica?           |
+| p7       | 7\. ¿En dónde cree usted que se dan más actos de corrupción?                                                                                    |
+| p8a      | 8a. En general, ¿cuánta corrupción cree usted que hay en Escuelas públicas?                                                                     |
 
-Finalmente, se realizó una recodificación y se crearon vectores de tipo carácter para facilitar la automatización del análisis. El objetivo principal es crear un código eficiente con los menores cambios manuales posibles.
-```{r 06_recode, echo = T, warning=FALSE, tidy=TRUE}
+Finalmente, se realizó una recodificación y se crearon vectores de tipo
+carácter para facilitar la automatización del análisis. El objetivo
+principal es crear un código eficiente con los menores cambios manuales
+posibles.
+
+``` r
 # Recodificación ----
 v_names <- codebook_2020$pregunta[c(16:113,139,140)]
 v_names <- tolower(v_names)
@@ -232,11 +271,19 @@ data_2020$weight <- as.numeric(data_2020$weight)
 data_2020[data_2020 == "Ns/Nc"] <- NA
 ```
 
-
 ## El análisis
 
-El análisis se compone de dos facetas. Primero, se utilizó el paquete `srvyr{}` para calcular todas las proporciones ponderadas de la encuesta. En esta etapa, además de las proporciones simples, se realizaron cruces por sexo, edad y circunscripción electoral. En el archivo [02_script_reforma_2020](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_2020.R) se encuentra todo el código utilizado para replicar los resultados. A continuación, se muestra el ejemplo de código para calcular cruces por sexo de todas las variables.
-```{r 07_props_sexo, echo = T, results = 'hide', warning=FALSE, tidy=TRUE}
+El análisis se compone de dos facetas. Primero, se utilizó el paquete
+`srvyr{}` para calcular todas las proporciones ponderadas de la
+encuesta. En esta etapa, además de las proporciones simples, se
+realizaron cruces por sexo, edad y circunscripción electoral. En el
+archivo
+[02\_script\_reforma\_2020](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_2020.R)
+se encuentra todo el código utilizado para replicar los resultados. A
+continuación, se muestra el ejemplo de código para calcular cruces por
+sexo de todas las variables.
+
+``` r
 # Proporciones por sexo ----
 # * Tabla de frecuencias ----
 test <- data.frame()
@@ -267,26 +314,406 @@ for (i in 2:length(v_names)){
 }
 
 prop_sexo <- test
-
-
 ```
 
+De esta manera, la tabla `prop_sexo` es una herramienta útil para
+observar las diferencias por sexo a las preguntas de la encuesta
+MCCI-Reforma. La columna `v_id` hace referencia a la pregunta —por
+ejemplo, “3. En general, ¿usted aprueba o desaprueba el trabajo de
+Andrés Manuel López Obrador como presidente?”—; la columna `var_v`
+desagrega las respuestas posibles a tal pregunta —aprueba o desaprueba
+totalmente, aprueba o desaprueba algo.
 
-De esta manera, la tabla `prop_sexo` es una herramienta útil para observar las diferencias por sexo a las preguntas de la encuesta MCCI-Reforma. La columna `v_id` hace referencia a la pregunta —por ejemplo, "3. En general, ¿usted aprueba o desaprueba el trabajo de Andrés Manuel López Obrador como presidente?"—; la columna `var_v` desagrega las respuestas posibles a tal pregunta —aprueba o desaprueba totalmente, aprueba o desaprueba algo. 
-```{r 08_props_sexo_tabla, echo=FALSE, warning=FALSE, message=FALSE, tidy=TRUE}
-knitr::kable(
-  head(
-    prop_sexo %>% 
-      mutate(v_id = paste0(str_sub(v_id,1,15),"...")) %>% 
-      select(sexo, v_id, var_v, prop, prop_se), 10
-  ), align = "c"
-) %>%
-  kableExtra::kable_styling(bootstrap_options = "striped", full_width = F)
-```
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 
+<thead>
 
-Segundo, al ser muy fácil filtrar este formato de base de datos, programar un loop para gráficas también es sencillo.
-```{r 09_props_sexo_gráfica, echo = T, results = 'hide', warning=FALSE, tidy=TRUE}
+<tr>
+
+<th style="text-align:center;">
+
+sexo
+
+</th>
+
+<th style="text-align:center;">
+
+v\_id
+
+</th>
+
+<th style="text-align:center;">
+
+var\_v
+
+</th>
+
+<th style="text-align:center;">
+
+prop
+
+</th>
+
+<th style="text-align:center;">
+
+prop\_se
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:center;">
+
+Hombre
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Aprueba totalmente
+
+</td>
+
+<td style="text-align:center;">
+
+0.2543212
+
+</td>
+
+<td style="text-align:center;">
+
+0.0183424
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Hombre
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Aprueba algo
+
+</td>
+
+<td style="text-align:center;">
+
+0.3783891
+
+</td>
+
+<td style="text-align:center;">
+
+0.0193763
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Hombre
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Desaprueba algo
+
+</td>
+
+<td style="text-align:center;">
+
+0.2071762
+
+</td>
+
+<td style="text-align:center;">
+
+0.0171196
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Hombre
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Desaprueba totalmente
+
+</td>
+
+<td style="text-align:center;">
+
+0.1601134
+
+</td>
+
+<td style="text-align:center;">
+
+0.0148367
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Mujer
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Aprueba totalmente
+
+</td>
+
+<td style="text-align:center;">
+
+0.1924279
+
+</td>
+
+<td style="text-align:center;">
+
+0.0158608
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Mujer
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Aprueba algo
+
+</td>
+
+<td style="text-align:center;">
+
+0.4029601
+
+</td>
+
+<td style="text-align:center;">
+
+0.0202355
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Mujer
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Desaprueba algo
+
+</td>
+
+<td style="text-align:center;">
+
+0.2127469
+
+</td>
+
+<td style="text-align:center;">
+
+0.0165133
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Mujer
+
+</td>
+
+<td style="text-align:center;">
+
+3\_en\_general\_us…
+
+</td>
+
+<td style="text-align:center;">
+
+Desaprueba totalmente
+
+</td>
+
+<td style="text-align:center;">
+
+0.1918651
+
+</td>
+
+<td style="text-align:center;">
+
+0.0166763
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Hombre
+
+</td>
+
+<td style="text-align:center;">
+
+4\_si\_hoy\_hubier…
+
+</td>
+
+<td style="text-align:center;">
+
+Que permanezca
+
+</td>
+
+<td style="text-align:center;">
+
+0.6607513
+
+</td>
+
+<td style="text-align:center;">
+
+0.0200381
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;">
+
+Hombre
+
+</td>
+
+<td style="text-align:center;">
+
+4\_si\_hoy\_hubier…
+
+</td>
+
+<td style="text-align:center;">
+
+Que renuncie
+
+</td>
+
+<td style="text-align:center;">
+
+0.3392487
+
+</td>
+
+<td style="text-align:center;">
+
+0.0200381
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+Segundo, al ser muy fácil filtrar este formato de base de datos,
+programar un loop para gráficas también es sencillo.
+
+``` r
 # * Gráficas ----
 v_names_loop <- str_replace_all(v_names, "v_", "")
 v_num <- sub("\\_.*", "", v_names_loop)
@@ -358,18 +785,23 @@ for(i in 2:length(v_names_loop)){
 rm(i, a)
 
 # beepr::beep(1)
-
-
 ```
 
+Finalmente, se generaron 99 gráficas piramidales. Este diseño es ideal
+para las visualizaciones por sexo, pues permiten identificar diferencias
+rápidamente
 
-Finalmente, se generaron 99 gráficas piramidales. Este diseño es ideal para las visualizaciones por sexo, pues permiten identificar diferencias rápidamente
+<img src="README_figs/README-10_gráfica_apr_pres-1.png" width="1440" style="display: block; margin: auto;" />
 
-![gráfica_apr_pres](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/03_gr%C3%A1ficas/01_sexo/3.png)
+Si bien para el producto final se realizaron (modificaciones
+estéticas)\[<https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_textos_2020.R>\]
+a partir de una base de datos que sólo contenía los datos usados en cada
+texto, la automatización del proceso de análisis le permitió a MCCI-UIA
+echar un vistazo inmediato a los principales resultados de la encuesta
+MCCI-Reforma 2020.
 
+Si tienes cualquier duda, comentario o sugerencia, no dudes en contactar
+a
+[katia.guzman@contralacorrupcion.mx](katia.guzman@contralacorrupcion.mx).
 
-Si bien para el producto final se realizaron [modificaciones estéticas](https://github.com/mxvscorrupcion/MCCI_LMFCI2020/blob/master/02_scripts/02_script_reforma_textos_2020.R) a partir de una base de datos que sólo contenía los datos usados en cada texto, la automatización del proceso de análisis le permitió a MCCI-UIA echar un vistazo inmediato a los principales resultados de la encuesta MCCI-Reforma 2020.
-
-Si tienes cualquier duda, comentario o sugerencia, no dudes en contactar a [katia.guzman@contralacorrupcion.mx](katia.guzman@contralacorrupcion.mx).
-
-Happy coding!
+Happy coding\!
