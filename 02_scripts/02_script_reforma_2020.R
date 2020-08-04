@@ -133,8 +133,8 @@ mcci_discrete <- c(
 )
 
 # Directorios ----
-inp <- "MCCI/encuesta_2020/01_datos/"
-out <- "MCCI/encuesta_2020/03_gráficas/"
+inp <- "Github/MCCI_LMFCI2020/01_datos/"
+out <- "Github/MCCI_LMFCI2020/03_gráficas/"
 
 # Mapa para gráficas ----
 load(paste0(inp, "mxmap.RData"))
@@ -496,6 +496,7 @@ for(i in 2:length(v_names)){
 }
 
 rm(i, a)
+beepr::beep(1)
 
 # Proporciones por circunscripción electoral ----
 # * Tabla de frecuencias ----
@@ -585,6 +586,7 @@ for(i in 2:length(v_names)){
   rm(c_0,c_1,c_2,c_3,c_4,c_5)
 }
 
+beepr::beep(1)
 
 # Guardar tablas de frecuencias ----
 openxlsx::write.xlsx(
@@ -602,3 +604,5 @@ openxlsx::write.xlsx(
 openxlsx::write.xlsx(
   prop_circ, paste0(out, "03_circunscripción/00_props_circ.xlsx")
 )
+
+beepr::beep(1)
