@@ -862,57 +862,7 @@ ggsave(filename = paste0(
 
 # * Texto 3 ----
 # ** Gráfica 3.1 ----
-a <- filter(d, id=="T3_1") %>% 
-  mutate(
-    fecha = lubridate::floor_date(as.Date.numeric(x = año,origin = "1900-01-01"), "month")
-  )
-fiuf <- unique(a$título)
-fiuff <- unique(a$subtítulo)
-fiuffi <- unique(a$fuente)
-
-ggplot(
-  a,
-  aes(
-    x = as.Date(fecha), y = props, col = ifelse(str_starts(variables, "Mej"),"Ha mejorado / Mejorará","Ha empeorado / Empeorará")
-  )
-) +
-  geom_line() + geom_point() +
-  facet_wrap(~ reorder(v_id, orden)) +
-  scale_y_continuous(
-    limits = c(0,100),
-    breaks = seq(0,100,25),
-    labels = paste0(
-      as.character(seq(0,100,25)), "%"
-    )
-  ) + 
-  scale_color_manual("",values = c("#f72732", "#000c2d")) +
-  scale_x_date(date_breaks = "3 month", 
-               labels = date_format("%Y-%m"),
-               limits = as.Date(c("2018-01-01","2020-02-01"))) +
-  labs(title= str_wrap(fiuf, width = 75),
-       subtitle = paste0(fiuff,"\n"),
-       caption = fiuffi) +
-  theme_minimal() +
-  theme(plot.title = element_text(size = 35, face = "bold" , hjust = 0.5),
-        plot.subtitle = element_text(size = 25, hjust = 0.5),
-        plot.caption = element_text(size = 20),
-        strip.text.x = element_text(size = 25),
-        panel.background = element_rect(fill = "transparent",colour = NA),
-        text = element_text(family = "Arial Narrow"),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.text.x = element_text(size = 15),
-        axis.text.y = element_text(size = 18),
-        legend.text = element_text(size = 25),
-        legend.key.size = unit(1.5, "cm"),
-        legend.position = "bottom")
-ggsave(filename = paste0(
-  out, unique(a$id), ".png"
-), width = 17, height = 12, dpi = 100, bg = "transparent")
-
-
-# ** Gráfica 3.2 ----
-a <- filter(d, id=="T3_2")
+a <- filter(d, id=="T3_1") 
 fiuf <- unique(a$título)
 fiuff <- unique(a$subtítulo)
 fiuffi <- unique(a$fuente)
@@ -950,8 +900,8 @@ ggsave(filename = paste0(
 ), width = 17, height = 12, dpi = 100, bg = "transparent")
 
 
-# ** Gráfica 3.3 ----
-a <- filter(d, id=="T3_3")
+# ** Gráfica 3.2 ----
+a <- filter(d, id=="T3_2")
 fiuf <- unique(a$título)
 fiuff <- unique(a$subtítulo)
 fiuffi <- unique(a$fuente)
@@ -992,8 +942,8 @@ ggsave(filename = paste0(
 ), width = 17, height = 12, dpi = 100, bg = "transparent")
 
 
-# ** Gráfica 3.4 ----
-a <- filter(d, id=="T3_4")
+# ** Gráfica 3.3 ----
+a <- filter(d, id=="T3_3")
 fiuf <- unique(a$título)
 fiuff <- unique(a$subtítulo)
 fiuffi <- unique(a$fuente)
