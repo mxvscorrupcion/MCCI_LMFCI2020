@@ -1757,48 +1757,6 @@ fiuf <- unique(a$título)
 fiuff <- unique(a$subtítulo)
 fiuffi <- unique(a$fuente)
 
-ggplot(a, aes(y = reorder(variables, -as.numeric(orden)),
-              x = props,
-              label = paste0(round(props, 2), "%"),
-              fill = as.factor(año))) +
-  geom_col(width = 0.5, position = position_dodge2()) + geom_text(hjust = -0.05, size = 6, position = position_dodge(width = 0.5)) +
-  facet_wrap(~as.factor(v_id)) +
-  scale_x_continuous(
-    limits = c(0,100),
-    breaks = seq(0,100,25),
-    labels = paste0(
-      as.character(seq(0,100,25)), "%"
-    )
-  ) + 
-  scale_fill_manual("", values = c(mcci_discrete[1], mcci_discrete[5])) +
-  labs(title= str_wrap(fiuf, width = 75),
-       caption = fiuffi) +
-  theme_minimal() +
-  theme(plot.title = element_text(size = 35, face = "bold" , hjust = 0.5),
-        plot.caption = element_text(size = 20),
-        strip.text.x = element_text(size = 30),
-        panel.spacing.x = unit(1.0, 'cm'),
-        panel.background = element_rect(fill = "transparent",colour = NA),
-        text = element_text(family = "Arial Narrow"),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.text.x = element_text(size = 18),
-        axis.text.y = element_text(size = 21),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 25),
-        legend.spacing.x = unit(1.0, 'cm'),
-        legend.position = "bottom")
-ggsave(filename = paste0(
-  out, unique(a$id), ".png"
-), width = 17, height = 12, dpi = 100, bg = "transparent")
-
-
-# ** Gráfica 7.3 ----
-a <- filter(d, id=="T7_3")
-fiuf <- unique(a$título)
-fiuff <- unique(a$subtítulo)
-fiuffi <- unique(a$fuente)
-
 ggplot(a, aes(fill = reorder(variables, -as.numeric(orden)),
               x = props,
               label = paste0(round(props, 2), "%"),
@@ -1835,8 +1793,8 @@ ggsave(filename = paste0(
   out, unique(a$id), ".png"
 ), width = 15, height = 10, dpi = 100, bg = "transparent")
 
-# ** Gráfica 7.4 ----
-a <- filter(d, id=="T7_4")
+# ** Gráfica 7.3 ----
+a <- filter(d, id=="T7_3")
 fiuf <- unique(a$título)
 fiuff <- unique(a$subtítulo)
 fiuffi <- unique(a$fuente)
