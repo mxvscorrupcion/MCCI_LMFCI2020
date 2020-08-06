@@ -2605,8 +2605,89 @@ ggsave(filename = paste0(
 ), width = 17, height = 12, dpi = 100, bg = "transparent")
 
 
-# * Texto 12 PENDIENTE ----
-# 
+# * Texto 12 ----
+# ** Gráfica 12.1 ----
+a <- filter(d, id=="T12_1")
+fiuf <- unique(a$título)
+fiuff <- unique(a$subtítulo)
+fiuffi <- unique(a$fuente)
+
+c <- round(a$props)
+names(c) <- paste0(a$variables, " [", a$props, "%]")
+nrows <- 10
+df <- expand.grid(y = 1:nrows, x = 1:nrows)
+df$category <- factor(rep(names(c), c))  
+df$orden <- factor(rep(a$orden, c))  
+
+ggplot(df, aes(x = x, y = y, fill = reorder(str_wrap(category, 25), as.numeric(orden)))) + 
+  geom_tile(color = "white", size = 0.25) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0), trans = 'reverse') +
+  scale_fill_manual("", values = c(mcci_discrete[1],
+                                   mcci_discrete[2],
+                                   mcci_discrete[5],
+                                   mcci_discrete[3]
+                                   )) +
+  labs(title= str_wrap(fiuf, width = 75),
+       caption = fiuffi) +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 35, face = "bold" , hjust = 0.5),
+        plot.caption = element_text(size = 20),
+        text = element_text(family = "Arial Narrow"),
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
+        legend.text = element_text(size = 25),
+        legend.key.size = unit(3, "lines"),
+        legend.position = "bottom")
+ggsave(filename = paste0(
+  out, unique(a$id), ".png"
+), width = 17, height = 12, dpi = 100, bg = "transparent")
+
+
+# ** Gráfica 12.2 ----
+a <- filter(d, id=="T12_2") %>% 
+  filter(!str_detect(variables, "s"))
+fiuf <- unique(a$título)
+fiuff <- unique(a$subtítulo)
+fiuffi <- unique(a$fuente)
+
+ggplot(a, aes(y = reorder(variables, -as.numeric(orden)),
+              x = props,
+              label = paste0(round(props, 2), "%"),
+              fill = as.factor(año))) +
+  geom_col(width = 0.5, position = position_dodge2()) + geom_text(hjust = -0.3, size = 8, position = position_dodge(width = 0.5)) +
+  scale_x_continuous(
+    limits = c(0,100),
+    breaks = seq(0,100,25),
+    labels = paste0(
+      as.character(seq(0,100,25)), "%"
+    )
+  ) + 
+  scale_fill_manual("", values = c(mcci_discrete[1], mcci_discrete[5])) +
+  labs(title= str_wrap(fiuf, width = 75),
+       caption = fiuffi) +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 35, face = "bold" , hjust = 0.5),
+        plot.subtitle = element_text(size = 25, hjust = 0.5),
+        plot.caption = element_text(size = 20),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        text = element_text(family = "Arial Narrow"),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.x = element_text(size = 18),
+        axis.text.y = element_text(size = 21),
+        legend.title = element_blank(),
+        legend.text = element_text(size = 25),
+        legend.spacing.x = unit(1.0, 'cm'),
+        legend.position = "bottom")
+ggsave(filename = paste0(
+  out, unique(a$id), ".png"
+), width = 17, height = 12, dpi = 100, bg = "transparent")
+
+
+
 # * Texto 13  ----
 # ** Gráfica 13.1 ----
 a <- filter(d, id=="T13_1")
@@ -2904,6 +2985,44 @@ ggsave(filename = paste0(
   out, unique(a$id), ".png"
 ), width = 17, height = 12, dpi = 100, bg = "transparent")
 
+# ** Gráfica 13.8 ----
+a <- filter(d, id=="T13_8")
+fiuf <- unique(a$título)
+fiuff <- unique(a$subtítulo)
+fiuffi <- unique(a$fuente)
+
+ggplot(a, aes(x = reorder(variables, as.numeric(orden)),
+              y = props,
+              label = paste0(round(props, 2), "%"),
+              fill = reorder(variables, as.numeric(orden)))) +
+  geom_col(width = 0.5, position = position_dodge2(width = 0.5)) + 
+  geom_text(vjust = -0.3, size = 8, position = position_dodge(width = 0.5)) +
+  scale_y_continuous(
+    limits = c(0,100),
+    breaks = seq(0,100,25),
+    labels = paste0(
+      as.character(seq(0,100,25)), "%"
+    )
+  ) + 
+  scale_fill_manual("", values = c(mcci_discrete[1], 
+                                   mcci_discrete[2], 
+                                   mcci_discrete[4], 
+                                   mcci_discrete[5])) +
+  labs(title= str_wrap(fiuf, width = 75),
+       caption = fiuffi) +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 35, face = "bold" , hjust = 0.5),
+        plot.caption = element_text(size = 20),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        text = element_text(family = "Arial Narrow"),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.x = element_text(size = 18),
+        axis.text.y = element_text(size = 21),
+        legend.position = "none")
+ggsave(filename = paste0(
+  out, unique(a$id), ".png"
+), width = 17, height = 12, dpi = 100, bg = "transparent")
 
 
 # * Texto 14 ----
