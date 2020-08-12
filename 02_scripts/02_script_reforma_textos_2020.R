@@ -3450,6 +3450,21 @@ ggsave(filename = paste0(
 
 # ** Gráficas 17.3 ----
 a <- filter(d, id=="T17_3") %>% 
+  mutate(
+    variables = case_when(
+      str_detect(tolower(variables), "bien") ~ "Muy bien / bien",
+      str_detect(tolower(variables), "mal") ~ "Mal / Muy mal",
+      T ~ variables
+    ),
+    orden = case_when(
+      str_detect(tolower(variables), "bien") ~ 1,
+      str_detect(tolower(variables), "regular") ~ 2,
+      str_detect(tolower(variables), "mal") ~ 3,
+      T ~ 4
+    )
+  ) %>% 
+  group_by(id, variables,orden, v_id, año, título, subtítulo) %>% 
+  summarise(props = sum(props, na.rm = T)) %>% 
   mutate(v_id = subtítulo,
          props = ifelse(v_id=="Hombre",props*-1,props))
 fiuf <- unique(a$título)
