@@ -1605,8 +1605,7 @@ ggplot() +
                x=props, 
                y= reorder(str_wrap(variables,25),-as.numeric(orden)), 
                col = as.factor(año)
-             ), size = 3,
-             colour_x=mcci_discrete[1], colour_xend = mcci_discrete[]) + 
+             ), size = 3) + 
   ggalt::geom_dumbbell(data = a %>% 
                          select(-c(id,título:tipo_gráfica))%>% 
                          pivot_wider(names_from = año, values_from = props), 
@@ -1616,18 +1615,18 @@ ggplot() +
                          y=reorder(str_wrap(variables,25),-as.numeric(orden)), 
                          y_end=reorder(str_wrap(variables,25),-as.numeric(orden))
                        ),
-                       colour_x=mcci_discrete[1], colour_xend = mcci_discrete[5],
+                       colour_x=mcci_discrete[5], colour_xend = mcci_discrete[1],
                        size_x = 4.5, size_xend = 4.5,
                        dot_guide = T,
                        colour = "gray", size = 2) + 
   geom_text(data = a %>% 
               select(-c(id,título:tipo_gráfica))%>% 
               pivot_wider(names_from = año, values_from = props), aes(x=`2020`, y=reorder(str_wrap(variables,25),-as.numeric(orden)), label=paste0(`2020`,"%")),
-            color=mcci_discrete[1], size=6, vjust=-1, fontface="bold")  +
+            color=mcci_discrete[5], size=6, vjust=-1, fontface="bold")  +
   geom_text(data = a %>% 
               select(-c(id,título:tipo_gráfica))%>% 
               pivot_wider(names_from = año, values_from = props), aes(x=`2019`, y=reorder(str_wrap(variables,25),-as.numeric(orden)), label=paste0(`2019`,"%")),
-            color=mcci_discrete[5], size=6, vjust=2, fontface="bold") +
+            color=mcci_discrete[1], size=6, vjust=2, fontface="bold") +
   scale_x_continuous(
     limits = c(0,75),
     breaks = seq(0,75,25),
