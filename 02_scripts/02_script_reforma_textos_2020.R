@@ -943,12 +943,21 @@ ggsave(filename = paste0(
 
 
 # ** Gráfica 3.3 ----
-a <- filter(d, id=="T3_3")
+a <- filter(d, id=="T3_3") %>% 
+  mutate(
+    orden_v = case_when(
+      v_id == "Entre quienes desaprueban de la labor anticorrupción del gobierno" ~ 1,
+      v_id == "Entre quienes desaprueban el trabajo del presidente" ~ 2,
+      v_id == "Entre quienes creen que la corrupción aumentará en los próximos 12 meses" ~ 3,
+      v_id == "Entre quienes creen que la corrupción ha aumentado en los últimos 12 meses" ~ 4,
+      T ~ NA_real_
+    )
+  )
 fiuf <- unique(a$título)
 fiuff <- unique(a$subtítulo)
 fiuffi <- unique(a$fuente)
 
-ggplot(a, aes(y = fct_rev(as.factor(str_wrap(v_id,25))),
+ggplot(a, aes(y = reorder(str_wrap(v_id,25), -orden_v),
               x = props,
               label = paste0(round(props, 2), "%"),
               fill = reorder(variables, -as.numeric(orden)))) +
